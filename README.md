@@ -1,2 +1,2 @@
-# Sorts
+# Sorting
 Sorting algorithms in cmd
