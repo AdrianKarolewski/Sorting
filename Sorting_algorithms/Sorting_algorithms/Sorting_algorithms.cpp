@@ -1,8 +1,5 @@
 #include <iostream>
-#include <time.h>
-#include <cstdlib>
-
-using namespace std;
+#include <chrono>
 
 void bubble_sort(int* wsk_tab, const int & how_m)
 {
@@ -243,95 +240,108 @@ void merge_sort(int* wsk_tab, int p, int n, int* help_a)
 }
 int main()
 {
-    clock_t start;
-
-    int how_m, how_big;
-    int prefer;
-
-    cout << "Ile liczb posortowac?: ";  cin >> how_m;
-    cout << "Wybierz zakres: ";        cin >> how_big;
-
-    int* digits = new int[how_m];
-    int* help_arr = new int[how_m];
-
+    int how_m{ 0 }, how_big{ 0 };
+    int prefer{ 1 };
+    std::chrono::system_clock::time_point start;
+    
     srand(time(NULL));
-
-    for (int i = 0; i < how_m; i++)
+    while (prefer != 9)
     {
-        *digits = rand() % how_big;
-        cout << *digits << " ";
-        digits++;
-    }
-    digits -= how_m;
-    cout << "Jak sortowac ? " << endl;
-    cout << "1. bubble_sort" << endl;
-    cout << "2. quick_sort" << endl;
-    cout << "3. heap_sort" << endl;
-    cout << "4. insertion_sort" << endl;
-    cout << "5. counting_sort" << endl;
-    cout << "6. select_sort" << endl;
-    cout << "7. shell_sort" << endl;
-    cout << "8. merge_sort" << endl;
-    cout << "Wybierz nr: ";       cin >> prefer;
+        std::cout << "Ile liczb posortowac?: ";  std::cin >> how_m;
+        std::cout << "Wybierz zakres: ";         std::cin >> how_big;
 
-    switch (prefer)
-    {
-    case 1:
-        start = clock();
-        bubble_sort(digits,how_m);
-        cout << "Czas bubble_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << " s" << endl;
-        break;
+        int* digits = new int[how_m];
+        int* help_arr = new int[how_m];
 
-    case 2:
-        start = clock();
-        quick_sort(digits, 0, how_m - 1);
-        cout << "Czas quick_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC  << endl;
-        break;
+        for (int i = 0; i < how_m; i++)
+        {
+            *digits = rand() % how_big;
+            std::cout << *digits << " ";
+            digits++;
+        }
+        digits -= how_m;
 
-    case 3:
-        start = clock();
-        heap_sort(digits, how_m - 1,how_m);
-        cout << "Czas heap_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
+        std::cout << "Jak sortowac ? " << std::endl;
+        std::cout << "1. bubble_sort" << std::endl;
+        std::cout << "2. quick_sort" << std::endl;
+        std::cout << "3. heap_sort" << std::endl;
+        std::cout << "4. insertion_sort" << std::endl;
+        std::cout << "5. counting_sort" << std::endl;
+        std::cout << "6. select_sort" << std::endl;
+        std::cout << "7. shell_sort" << std::endl;
+        std::cout << "8. merge_sort" << std::endl;
+        std::cout << "Wybierz nr: ";       std::cin >> prefer;
 
-    case 4:
-        start = clock();
-        insertion_sort(digits, how_m - 1);
-        cout << "Czas insertion_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
+        switch (prefer)
+        {
 
-    case 5:
-        start = clock();
-        counting_sort(digits, how_m - 1, help_arr, how_big);
-        cout << "Czas counting_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
+        case 1:
+            start = std::chrono::system_clock::now();
+            bubble_sort(digits, how_m);
+            std::cout << "Czas bubble_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
 
-    case 6:
-        start = clock();
-        select_sort(digits, how_m - 1);
-        cout << "Czas select_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
+        case 2:
+            start = std::chrono::system_clock::now();
+            quick_sort(digits, 0, how_m - 1);
+            std::cout << "Czas quick_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
 
-    case 7:
-        start = clock();
-        shell_sort(digits, how_m - 1);
-        cout << "Czas shell_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
+        case 3:
+            start = std::chrono::system_clock::now();
+            heap_sort(digits, how_m - 1, how_m);
+            std::cout << "Czas heap_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
 
-    case 8:
-        start = clock();
-        merge_sort(digits, 0, how_m - 1, help_arr);
-        cout << "Czas merge_sort: " << (double)(clock() - start) / CLOCKS_PER_SEC << "s" << endl;
-        break;
-    }
+        case 4:
+            start = std::chrono::system_clock::now();
+            insertion_sort(digits, how_m - 1);
+            std::cout << "Czas insertion_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
 
-    for (int i = 0; i < how_m; i++)
-    {
-        cout << *digits << " ";
-        digits++;
-    }
-    digits -= how_m;
-    delete[] digits;
-    delete[] help_arr;
+        case 5:
+            start = std::chrono::system_clock::now();
+            counting_sort(digits, how_m - 1, help_arr, how_big);
+            std::cout << "Czas counting_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
+
+        case 6:
+            start = std::chrono::system_clock::now();
+            select_sort(digits, how_m - 1);
+            std::cout << "Czas select_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
+
+        case 7:
+            start = std::chrono::system_clock::now();
+            shell_sort(digits, how_m - 1);
+            std::cout << "Czas shell_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
+
+        case 8:
+            start = std::chrono::system_clock::now();
+            merge_sort(digits, 0, how_m - 1, help_arr);
+            std::cout << "Czas merge_sort: " << std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::system_clock::now() - start).count() << " s" << std::endl;
+            break;
+        }
+        for (int i = 0; i < how_m; i++)
+        {
+            std::cout << *digits << " ";
+            digits++;
+        }
+        std::cout << std::endl;
+        digits -= how_m;
+        delete[] digits;
+        digits = nullptr;
+        delete[] help_arr;
+        help_arr = nullptr;
+    }   
     return 0;
 }
